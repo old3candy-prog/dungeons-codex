@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101b16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dungeons Codex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Dungeons Codex｜冒險者圖鑑</title>
+<style>
+:root{color-scheme:dark;--bg:#0b120f;--panel:#14221a;--panel2:#1b2d21;--line:#35513b;--green:#8cdb69;--muted:#a9b8aa;--gold:#e4c477}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#203b28 0,transparent 38%),linear-gradient(160deg,#101b16,#080d0b 75%);color:#f3f6ef;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+header{padding:calc(18px + env(safe-area-inset-top)) 18px 16px;position:sticky;top:0;z-index:5;background:#0d1713eF;backdrop-filter:blur(16px);border-bottom:1px solid #314637}
+.brand{font-size:11px;letter-spacing:2.5px;color:var(--green);font-weight:900}.headrow{display:flex;align-items:center;justify-content:space-between}.headrow h1{font-size:25px;margin:5px 0 0;font-weight:900}.mark{width:42px;height:42px;border:1px solid #628650;border-radius:12px;display:grid;place-items:center;background:#203927;font-size:22px}
+main{padding:18px;max-width:850px;margin:auto}.hero{border:1px solid #496c4a;border-radius:18px;padding:22px;min-height:185px;background:linear-gradient(125deg,#315b35,#172b20 65%,#101a16);position:relative;overflow:hidden;box-shadow:0 14px 35px #0005}.hero:after{content:"⚔";position:absolute;right:15px;bottom:-28px;font-size:130px;color:#ffffff12;transform:rotate(-18deg)}.eyebrow{font-size:10px;letter-spacing:2px;color:#b6ef91;font-weight:900}.hero h2{font-size:25px;line-height:1.3;margin:12px 0 8px;max-width:260px}.hero p{font-size:13px;color:#d0ddce;max-width:270px;line-height:1.6;margin:0}
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:25px 0 12px}.section-title small{font-size:10px;letter-spacing:2px;color:var(--green);font-weight:900}.section-title h2{font-size:21px;margin:4px 0 0}.muted{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{background:linear-gradient(145deg,#1b3023,#111d17);border:1px solid #304c35;border-radius:14px;padding:15px;text-align:left;color:inherit;min-height:115px;cursor:pointer}.tile:active,.item:active,.nav button:active{transform:scale(.98)}.tile .ico{font-size:25px;color:var(--green);margin-bottom:11px}.tile strong{display:block;font-size:15px}.tile span{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.4}
+.quick{display:flex;gap:9px;overflow:auto;padding-bottom:4px}.quick button{white-space:nowrap;border:1px solid #456448;background:#1a2b20;color:#eaf5e7;padding:10px 13px;border-radius:999px;font-size:12px}
+.search{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #3a5940;background:#101b15;color:white;font-size:15px;outline:none;margin:4px 0 14px}.search:focus{border-color:var(--green)}
+.item{display:flex;align-items:center;gap:12px;padding:13px;background:#142219;border:1px solid #2d4733;border-radius:13px;margin-bottom:9px;cursor:pointer}.itemico{width:43px;height:43px;border-radius:11px;background:#25402b;display:grid;place-items:center;font-size:22px;color:var(--green);flex-shrink:0}.item strong{font-size:14px}.item small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.arrow{margin-left:auto;color:#7c987d}
+.panel{padding:16px;border:1px solid #36543a;background:#14231a;border-radius:14px;margin:12px 0}.panel h3{margin:0 0 8px;font-size:16px}.panel p{color:#c5d2c5;font-size:13px;line-height:1.7;margin:0}.tag{display:inline-block;font-size:10px;color:#c9f2b2;background:#29452c;padding:5px 8px;border-radius:99px;margin-bottom:10px}
+.dlcrow{display:flex;align-items:center;gap:13px;padding:14px 2px;border-bottom:1px solid #304334}.dlcicon{font-size:24px;width:42px;text-align:center;color:var(--green)}.dlcrow small{display:block;color:var(--muted);margin-top:4px}
+.page{display:none}.page.active{display:block}.back{border:0;background:transparent;color:var(--green);font-size:14px;padding:0;margin:4px 0 16px}.detail-symbol{font-size:54px;background:#1a3020;border:1px solid #456a48;border-radius:18px;padding:23px;text-align:center;margin-bottom:18px}
+textarea{width:100%;min-height:145px;background:#0c1711;color:#fff;border:1px solid #3a5940;border-radius:10px;padding:12px;font:14px/1.5 inherit;resize:vertical}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:#0d1714f2;border-top:1px solid #304536;backdrop-filter:blur(15px)}.nav button{border:0;background:transparent;color:#91a394;font-size:10px;padding:5px 0;cursor:pointer}.nav button b{display:block;font-size:20px;margin-bottom:3px}.nav button.active{color:var(--green)}
+footer{color:#718275;font-size:10px;text-align:center;padding:22px 5px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero h2{max-width:420px}.hero p{max-width:440px}}
+</style>
+</head>
+<body>
+<header><div class="headrow"><div><div class="brand">MINECRAFT DUNGEONS // CODEX</div><h1>冒險者圖鑑</h1></div><div class="mark">⬟</div></div></header>
+<main>
+<section id="home" class="page active">
+ <div class="hero"><div class="eyebrow">EXPLORE • FIGHT • SURVIVE</div><h2>深入地下城，<br>準備好你的冒險。</h2><p>武器、盔甲、法器、附魔與高塔攻略，集中整理在你的冒險者圖鑑。</p></div>
+ <div class="section-title"><div><small>DATABASE</small><h2>探索圖鑑</h2></div><span class="muted">選擇分類</span></div>
+ <div class="grid" id="categoryGrid"></div>
+ <div class="section-title"><div><small>FIELD NOTES</small><h2>冒險提示</h2></div></div>
+ <div class="panel"><span class="tag">TOWER TIP</span><h3>依照當次裝備調整打法</h3><p>高塔每次提供的裝備可能不同。先確認生存、回血與控場能力，再考慮輸出，不必硬套固定配裝。</p></div>
+</section>
+<section id="catalog" class="page">
+ <div class="section-title"><div><small>ITEM DATABASE</small><h2>資料圖鑑</h2></div></div>
+ <input class="search" id="search" placeholder="⌕ 搜尋武器、盔甲、法器、生物…" autocomplete="off">
+ <div id="catalogList"></div>
+</section>
+<section id="tower" class="page">
+ <div class="section-title"><div><small>ENDLESS CLIMB</small><h2>高塔攻略</h2></div></div>
+ <div class="panel"><span class="tag">STRATEGY</span><h3>挑戰思路</h3><p>每層選裝時，先確認回血、生存與控場，再評估輸出。遇到遠程或高機動敵人時，注意走位與技能冷卻。</p></div>
+ <div class="panel"><h3>個人樓層紀錄</h3><p style="margin-bottom:10px">記錄目前樓層、威脅等級、敵人與裝備選擇。</p><textarea id="towerNotes" placeholder="例如：第 21 層｜威脅等級 7｜拳套＋戰袍……"></textarea><button class="quick" style="margin-top:10px" onclick="saveNotes()">儲存筆記</button><span id="savedMsg" class="muted" style="margin-left:10px"></span></div>
+ <div class="panel"><h3>通關檢查</h3><p>□ 裝備是否有穩定回血？<br>□ 是否有應對遠程敵人的方法？<br>□ 法器是否能互相配合？<br>□ 是否保留逃生或控場手段？</p></div>
+</section>
+<section id="dlc" class="page">
+ <div class="section-title"><div><small>EXPANSIONS</small><h2>DLC 資料</h2></div></div>
+ <div class="panel" id="dlcList"></div>
+ <div class="panel"><h3>平台版本</h3><p>Windows｜Steam｜Xbox｜Nintendo Switch｜PlayStation 4</p></div>
+</section>
+<section id="detail" class="page">
+ <button class="back" onclick="showPage('catalog')">‹ 返回圖鑑</button>
+ <div id="detailContent"></div>
+</section>
+<footer>非官方粉絲圖鑑 · 與 Mojang / Microsoft 無隸屬關係<br>資料可持續擴充，部分項目目前為初始示範內容。</footer>
+</main>
+<nav class="nav">
+ <button class="active" data-page="home" onclick="showPage('home')"><b>⌂</b>首頁</button>
+ <button data-page="catalog" onclick="showPage('catalog')"><b>▤</b>圖鑑</button>
+ <button data-page="tower" onclick="showPage('tower')"><b>♜</b>高塔</button>
+ <button data-page="dlc" onclick="showPage('dlc')"><b>✧</b>DLC</button>
+</nav>
+<script>
+const categories=[
+ ["剧情","📜","故事與主要角色"],["近戰武器","⚔️","近身戰鬥與武器特性"],["遠程武器","🏹","弓與遠程攻擊"],["盔甲","🛡️","防禦、增益與生存"],["法器","✨","戰鬥中的特殊能力"],["附魔","🔮","強化裝備的附魔效果"],["生物","👾","敵人、Boss 與生物"],["地點","🗺️","任務與探索區域"],["遠古狩獵","🐗","遠古生物與獎勵"],["消耗品","🧪","戰鬥與探索道具"],["冒險中心","🏕️","營地與冒險功能"],["皮膚","🎭","角色外觀"],["裝飾","🎨","外觀裝飾與披風"],["高塔","🏰","樓層、選裝與通關筆記"],["挑戰","🏆","每日挑戰與特殊挑戰"],["成就","🎖️","成就與完成條件"]
+];
+const items=[
+ ["拳套","快速近戰武器","🥊","近戰武器","以快速連擊為特色。實際輸出與手感會受到裝備等級及附魔影響。"],
+ ["鑽石劍","經典近戰武器","⚔️","近戰武器","平衡型近戰武器，可依照玩法搭配不同附魔。"],
+ ["弓","遠程武器","🏹","遠程武器","適合在接近敵人前先進行遠程攻擊。"],
+ ["戰袍","盔甲","🛡️","盔甲","盔甲的選擇會影響生存能力與技能搭配，請留意裝備提供的效果。"],
+ ["喚雷法杖","法器","⚡","法器","召喚雷電打擊敵人。注意法器的冷卻時間與使用時機。"],
+ ["浮流之羽","法器","🪶","法器","提供機動與控場用途，可用來調整戰鬥節奏。"],
+ ["奇厄教主","主要反派","👑","生物","Minecraft Dungeons 故事中的重要反派。"],
+ ["地獄幽靈","敵對生物","👻","生物","留意其遠程攻擊與出現時機，適時利用地形與控場。"],
+ ["幻魔者","敵對生物","🌀","生物","面對高機動敵人時，注意保持距離並觀察攻擊節奏。"],
+ ["高塔","挑戰模式","🏰","高塔","逐層挑戰並在途中選擇裝備。建議依照當次提供的裝備調整打法。"],
+ ["附魔點數","強化資源","🔮","附魔","用於提升裝備附魔。分配前先考慮主要流派與裝備用途。"]
+];
+const dlcs=[["覺醒叢林","2020 年 7 月 1 日","🌿"],["悚伏寒冬","2020 年 9 月 8 日","❄️"],["嚎風山巔","2020 年 12 月 9 日","🌬️"],["下界之焰","2021 年 2 月 24 日","🔥"],["隱秘深淵","2021 年 5 月 26 日","🌊"],["虛空回響","2021 年 7 月 28 日","🌌"]];
+const grid=document.getElementById('categoryGrid');
+categories.forEach(c=>{const b=document.createElement('button');b.className='tile';b.innerHTML=`<div class="ico">${c[1]}</div><strong>${c[0]}</strong><span>${c[2]}</span>`;b.onclick=()=>{showPage('catalog');document.getElementById('search').value=c[0];renderItems(c[0])};grid.appendChild(b)});
+function renderItems(filter=''){const list=document.getElementById('catalogList');list.innerHTML='';const found=items.filter(i=>(!filter||i[0].includes(filter)||i[3].includes(filter)||i[1].includes(filter)));if(!found.length){list.innerHTML='<div class="panel"><h3>資料準備中</h3><p>這個分類的完整資料將在後續版本補上。</p></div>';return}found.forEach(i=>{const el=document.createElement('div');el.className='item';el.innerHTML=`<div class="itemico">${i[2]}</div><div><strong>${i[0]}</strong><small>${i[3]} · ${i[1]}</small></div><span class="arrow">›</span>`;el.onclick=()=>openDetail(i);list.appendChild(el)})}
+function openDetail(i){document.getElementById('detailContent').innerHTML=`<div class="detail-symbol">${i[2]}</div><span class="tag">${i[3]}</span><h2 style="font-size:27px;margin:0 0 14px">${i[0]}</h2><div class="panel"><h3>${i[1]}</h3><p>${i[4]}</p></div><div class="panel"><h3>資料備註</h3><p>目前為圖鑑初始資料。後續可補上傷害、攻速、效果、取得地點與附魔相容性。</p></div>`;showPage('detail')}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo(0,0)}
+document.getElementById('search').addEventListener('input',e=>renderItems(e.target.value.trim()));
+document.getElementById('dlcList').innerHTML=dlcs.map(d=>`<div class="dlcrow"><div class="dlcicon">${d[2]}</div><div><strong>${d[0]}</strong><small>${d[1]}</small></div></div>`).join('');
+function saveNotes(){const v=document.getElementById('towerNotes').value;try{localStorage.setItem('dungeons-tower-notes',v);document.getElementById('savedMsg').textContent='已儲存';}catch(e){document.getElementById('savedMsg').textContent='無法儲存';}}
+try{document.getElementById('towerNotes').value=localStorage.getItem('dungeons-tower-notes')||''}catch(e){}
+renderItems();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
